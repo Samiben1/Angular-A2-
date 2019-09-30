@@ -19,23 +19,17 @@ app.use(bodyParser.json());
 
 
 
+
 MongoClient.connect(dburl, { useNewUrlParser: true,useUnifiedTopology: true }, function(err,db){
     if (err) {
         console.log("DB connection failed");
         return;
     }
-    var dbo = db.db(dbname);
-    dbo.collection('products').find({}).toArray(function(err, result){
-        if (err) {
-            console.log("no such collection");
-            return;
-        }
-        console.log(result);
-        db.close();
-    });
+
     console.log("DB connecteion open");
-    require('./api/create_user.js');
-    require('./api/create_group.js');
+    require('./api/get_user.js')(db,dbname);
+    require('./api/create_user.js')(db,app);
+    require('./api/create_group.js')(db,app);
     require('./api/create_channel.js');
     require('./api/add_user_to_group.js');
     require('./api/add_user_to_channel.js');
@@ -44,7 +38,17 @@ MongoClient.connect(dburl, { useNewUrlParser: true,useUnifiedTopology: true }, f
     require('./api/delete_channel.js');
     require('./api/remove_user_from_group.js');
     require('./api/remove_user_from_channel.js');
-
+    
+    // var dbo = db.db(dbname);
+    // dbo.collection('users').find({}).toArray(function(err, result){
+    //     if (err) {
+    //         console.log("no users in the collection");
+    //         return;
+    //     }
+    //     console.log(result);
+        
+    //     db.close();
+    // });
 });
 
 app.get('/', function(req, res){
