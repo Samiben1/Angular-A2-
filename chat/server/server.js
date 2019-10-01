@@ -1,66 +1,45 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-// var path = require('path');
 var bodyParser = require('body-parser');
-var cors = require('cors');
-const io = require('socket.io')(http);
-const sockets = require('./socket.js')
 
-var Port = 3000;
-var dbname = 'mydb';
+var path = require('path');
+var cors = require('cors'); //import the cors package. 
 
-var MongoClient = require('mongodb').MongoClient;
-var objectID = require('mongodb').ObjectID;
-// var mongoose = require('mongoose');
-var dburl = 'mongodb://localhost:27017/';
+var fs = require('fs');
 
-app.use(cors());
+
+
+
+app.use(cors()); // Add cors middleware to the express application
 app.use(bodyParser.json());
 
 
 
-MongoClient.connect(dburl, { useNewUrlParser: true,useUnifiedTopology: true }, function(err,db){
-    if (err) {
-        console.log("DB connection failed");
-        return;
-    }
-    var dbo = db.db(dbname);
-    sockets.connect(app,io,db);
 
-    var uname = "super";
-    console.log("DB connecteion open");
-    require('./routes/get_user.js')(db,dbname);
-    require('./routes/create_user.js')(db,app);
-    require('./routes/create_group.js')(db,app);
-    require('./routes/create_channel.js');
-    require('./routes/add_user_to_group.js');
-    require('./routes/add_user_to_channel.js');
-    require('./routes/delete_user.js');
-    require('./routes/delete_group.js');
-    require('./routes/delete_channel.js');
-    require('./routes/remove_user_from_group.js');
-    require('./routes/remove_user_from_channel.js');
-    
-    // var dbo = db.db(dbname);
-    // dbo.collection('users').find({}).toArray(function(err, result){
-    //     if (err) {
-    //         console.log("no users in the collection");
-    //         return;
-    //     }
-    //     console.log(result);
-        
-    //     db.close();
-    // });
-});
+// app.use(express.static(__dirname + "../dist/firstTry/"));
 
-app.get('/', function(req, res){
-    console.log("Get the home page");
-    res.send("Home page");
-});
+app.post('/api/auth',require('./routes/login.js'));
+app.post('/createuser',require('./routes/createuser.js'));
+app.post('/creategroup',require('./routes/creategroup.js'));
+app.post('/deleteuser',require('./routes/deleteuser.js'));
+app.post('/deletegroup',require('./routes/deletegroup.js'));
+app.post('/getgroupdetail',require('./routes/getgroupdetail.js'));
+app.post('/createnewgroupuser',require('./routes/createnewgroupuser.js'));
+app.post('/addusertogroup',require('./routes/addusertogroup.js'));
+app.post('/promotetogroupadmin',require('./routes/promotetogroupadmin.js'));
+
+
+app.post('/createchannel',require('./routes/createchannel.js'));
+app.post('/deletechannel',require('./routes/deletechannel.js'));
+
+app.post('/removeuserfromgroup',require('./routes/removeuserfromgroup.js'));
+
+app.post('/addusertochannel',require('./routes/addusertochannel.js'));
 
 
 
-var listen = http.listen(Port,function(){
-    console.log("Server started at port:", Port);
-});
+
+
+
+http.listen(3000);

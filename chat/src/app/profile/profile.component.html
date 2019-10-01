@@ -1,1 +1,166 @@
-<p>profile works!</p>
+<nav class="navbar navbar-expand-sm bg-light">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="/account">Dashboard</a>
+	</div>
+	<ul class="nav navbar-nav navbar-right">
+		
+		<button class="btn btn-secondary" (click) = "logout()">LogOut</button>
+		
+	</ul>
+</nav><br>
+
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<h3>User Profile</h3>
+					<h5>{{username}}</h5>
+					<p>Email: {{email}}</p>
+				</div>
+			</div>
+		</div>
+	</div><br>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<h3>User List</h3>
+					<ul *ngFor = "let user of userlist">
+						<li >{{user}}<br><button class="btn btn-danger" (click) = "deleteUser(user)">x</button><button class="btn btn-success" (click) = "promoteToGroupAdmin(user)">Promote</button></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card">
+				<div class="card-body">
+					<div id="grouplist" *ngIf="grouplist.length">
+						<h3>Groups</h3>
+						<ul *ngFor = "let group of grouplist">
+							<li>
+								<a  (click) = "groupDetail(group)">{{group}}</a>
+								<div *ngIf="admingrouplist.length > 0 &&  admingrouplist.includes(group)"><button class="btn btn-danger" (click) = "deleteGroup(group)">x</button></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><br>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="card" style="width: 100rem;">
+			<div class="card-body" *ngIf="detailedgroup.groupname">
+				<h3 class="card-title">Group Details <button class="btn btn-danger" (click) = "removegroupdetails()">X</button></h3>
+				<h6 class="card-subtitle mb-2 text-muted">{{detailedgroup.groupname}}: {{detailedgroup.membercount }} member/s </h6>
+				
+				<div id="groupdetails" *ngIf="detailedgroup.groupname">
+					<ul *ngFor = "let channel of detailedgroup.channels">
+						<li>
+							<a  (click) = "channelDetail(channel)">{{channel}} </a>
+							<button class="btn btn-danger" (click) = "deleteChannel(channel)" *ngIf="detailedgroup.isofadmin">X</button>
+						</li>
+					</ul><br>
+	
+					<!-- Add and remove user from group -->
+
+					<div *ngIf="detailedgroup.isofadmin">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="card">
+										<div class="card-body" >
+											<h5 class="card-title">Add to group</h5>
+											<input type="text" class="form-control" [(ngModel)]="groupusername" name="groupusername" placeholder="username" required><br><br>
+											<input type="text" class="form-control" [(ngModel)]="ofgroupasis" name="ofgroupasis" placeholder="group asis?" required><br><br>
+											<button class="btn btn-primary" (click) = "addExistingUserToGroup()">Add</button>
+										</div>
+									</div><br>
+								</div>
+								<div class="col-sm-4">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title">Remove from Group</h5>
+											<input type="text" class="form-control" [(ngModel)]="rusername" name="rusername" placeholder="username" ><br><br>
+											<button class="btn btn-primary" (click) = "removeUserFromGroup()">Remove</button>
+										</div>
+									</div><br>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<!-- New channel form -->
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="card">
+									<div class="card-body" *ngIf="detailedgroup.isofasis">
+										<h6 class="card-subtitle mb-2 text-muted">Create channel</h6>
+										<input type="text" class="form-control" [(ngModel)]="nchannelname" name="nchannelname" placeholder="channel name"><br><br>
+									    <button class="btn btn-primary" (click) = "createChannel()"> Create a channel</button>
+									</div>
+								</div><br><br>
+							</div>
+								
+							<div class="col-sm-4">
+								<div class="card" *ngIf="detailedgroup.isofasis">
+									<div class="card-body">
+										<h5 class="card-title">Add to channel</h5>
+										<input type="text" class="form-control" [(ngModel)]="cusername" name="cusername" placeholder="user name"><br><br>
+										<input type="text" class="form-control" [(ngModel)]="addtochannelname" name="addtochannelname" placeholder="channel name"><br><br>
+										<button class="btn btn-primary" (click) = "addUserToChannel()"> Add</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+						
+			</div>
+		</div>
+	</div><br>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="card">
+				<div class="card-body" *ngIf="username == 'super' || username == 'admin'">
+					<h1 class="card-title">Create new user</h1>
+					<form>
+						<input type="text" class="form-control" [(ngModel)]="nusername" name="nusername" placeholder="username" required><br><br>
+						<input type="text" class="form-control" [(ngModel)]="nbirthdate" name="nbirthdate" placeholder="birthdate" required><br><br>
+						<input type="text" class="form-control" [(ngModel)]="nage" name="nage" placeholder="age" required><br><br>
+						<input type="text" class="form-control" [(ngModel)]="nemail" name="nemail" placeholder="email" required><br><br>
+						<input type="text" class="form-control" [(ngModel)]="nofgroupadmin" name="nofgroupadmin" placeholder="role" required><br><br>
+						<input type="password" [(ngModel)]="npassword" name="npassword" placeholder="password"><br><br>
+						<button (click) = "createNewUser()" class="btn btn-success">Create</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card">
+				<div class="card-body" *ngIf="ofgroupadmin" >
+					<h1 class="card-title">Create Group</h1>
+					<form>
+						<input type="text" class="form-control" [(ngModel)]="ngroupname" name="ngroupname" placeholder="groupname" ><br><br>
+						<button (click) = "createNewGroup()" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+ 
