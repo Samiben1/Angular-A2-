@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
-
+const io = require('socket.io')(http);
 var path = require('path');
 var cors = require('cors'); //import the cors package. 
-
+var socket = require('./socket.js');
 var fs = require('fs');
 
 
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 
 
-// app.use(express.static(__dirname + "../dist/firstTry/"));
+
 
 app.post('/api/auth',require('./routes/login.js'));
 app.post('/createuser',require('./routes/createuser.js'));
@@ -38,8 +38,12 @@ app.post('/removeuserfromgroup',require('./routes/removeuserfromgroup.js'));
 app.post('/addusertochannel',require('./routes/addusertochannel.js'));
 
 
+var Port = 3000;
 
+var listen = http.listen(Port,function(){
+    console.log("Server started at port:", Port);
+});
 
+socket.connect(io,Port)
 
-
-http.listen(3000);
+// http.listen(3000);

@@ -4,7 +4,8 @@
 	</div>
 	<ul class="nav navbar-nav navbar-right">
 		
-		<button class="btn btn-secondary" (click) = "logout()">LogOut</button>
+		<li><button class="btn btn-secondary" (click) = "logout()">LogOut</button>
+		<!-- <li><a routerlink="Chat">Chat</a></li> -->
 		
 	</ul>
 </nav><br>
@@ -30,7 +31,7 @@
 				<div class="card-body">
 					<h3>User List</h3>
 					<ul *ngFor = "let user of userlist">
-						<li >{{user}}<br><button class="btn btn-danger" (click) = "deleteUser(user)">x</button><button class="btn btn-success" (click) = "promoteToGroupAdmin(user)">Promote</button></li>
+						<li >{{user}} <br><button class="btn btn-danger" (click) = "deleteUser(user)">x</button><button class="btn btn-success"  (click) = "promoteToGroupAdmin(user)">Promote </button></li>
 					</ul>
 				</div>
 			</div>

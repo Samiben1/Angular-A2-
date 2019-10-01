@@ -1,1 +1,1 @@
-{"super":{"username":"super","birthdate":"00-00-0000","age":"999999","ofgroupadmin":true,"grouplist":[],"admingrouplist":[],"email":"super@gmail.com","password":"super","valid":true}}
+{"super":{"username":"super","birthdate":"7/9/1999","age":"20","ofgroupadmin":true,"grouplist":["group1"],"admingrouplist":["group1"],"email":"super@gmail.com","password":"super","valid":true},"admin":{"username":"admin","birthdate":"12","age":"12","email":"admin@admin.com","ofgroupadmin":true,"admingrouplist":[],"grouplist":[],"password":"admin","valid":true}}

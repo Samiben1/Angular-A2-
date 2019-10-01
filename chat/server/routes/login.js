@@ -1,6 +1,7 @@
 var fs = require('fs');
 
   module.exports = function(req,res){
+      console.log("login");
             var falseObj = 
             {
                 username:"" ,
@@ -23,8 +24,8 @@ var fs = require('fs');
                     var users = {
                                 super: {
                                           username:"super",
-                                          birthdate:"00-00-0000",
-                                          age:"999999",
+                                          birthdate:"7/9/1999",
+                                          age:"20",
                                           ofgroupadmin:true,
                                           grouplist:[],
                                           admingrouplist:[],
@@ -33,6 +34,7 @@ var fs = require('fs');
                                           valid:true
                                        }
                                 };
+                                
                     fs.writeFile('./data/users.js', JSON.stringify(users), function (err) {
                                 if (err) throw err;
 
@@ -47,11 +49,12 @@ var fs = require('fs');
                                 {
                                     if(user != "super")
                                             {
-                                                    totaluserlist.push(user);
+                                                totaluserlist.push(user);
                                             }
                                 }
                                 for (var user in users)
                                 {
+                                    
                                             if (req.body.username == users[user].username && req.body.password == users[user].password) 
                                         {
                                             if(req.body.username == "super")

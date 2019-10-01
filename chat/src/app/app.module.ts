@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ChatComponent } from './chat/chat.component';
+// import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
 
 import { ProfileComponent } from './profile/profile.component';
@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent,
+    // ChatComponent,
     LoginComponent,
     ProfileComponent,
   ],
