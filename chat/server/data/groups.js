@@ -1,1 +1,1 @@
-{"group1":{"groupname":"group1","creator":"super","admins":["super"],"asis":["super"],"channels":{"room1":{"channelname":"room1","members":["super","admin"],"admins":["super"]}},"members":["super"]}}
+{"group1":{"groupname":"group1","creator":"super","admins":["super"],"asis":["super"],"channels":{"room1":{"channelname":"room1","members":["super","admin"],"admins":["super"]}},"members":["super"]},"group2":{"groupname":"group2","creator":"admin","admins":["super","admin"],"asis":["super","admin"],"channels":{},"members":["super","admin"]}}

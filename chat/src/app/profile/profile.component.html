@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-sm bg-light">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="/account">Dashboard</a>
+		<a class="navbar-brand" href="/profile">Dashboard</a>
 	</div>
 	<ul class="nav navbar-nav navbar-right">
-		
+		<!-- <li><a href="/profile">Chat</a></li> -->
 		<li><button class="btn btn-secondary" (click) = "logout()">LogOut</button>
 		<!-- <li><a routerlink="Chat">Chat</a></li> -->
 		
@@ -65,7 +65,7 @@
 				<div id="groupdetails" *ngIf="detailedgroup.groupname">
 					<ul *ngFor = "let channel of detailedgroup.channels">
 						<li>
-							<a  (click) = "channelDetail(channel)">{{channel}} </a>
+							<a>{{channel}} </a>
 							<button class="btn btn-danger" (click) = "deleteChannel(channel)" *ngIf="detailedgroup.isofadmin">X</button>
 						</li>
 					</ul><br>

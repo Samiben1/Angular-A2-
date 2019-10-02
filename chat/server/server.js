@@ -45,5 +45,3 @@ var listen = http.listen(Port,function(){
 });
 
 socket.connect(io,Port)
-
-// http.listen(3000);

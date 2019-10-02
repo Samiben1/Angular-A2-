@@ -126,17 +126,6 @@ export class ProfileComponent implements OnInit {
 		}
 	}
 
-
-	// turn(num) {
-	// 	if (num == 1) {
-	// 		this.createnewgroupuser = true;
-	// 		this.addnewgroupuser = false;
-	// 	} else {
-	// 		this.addnewgroupuser = true;
-	// 		this.createnewgroupuser = false;
-	// 	}
-	// }
-
   //User logs out and localstorage is cleared 
 	logout() {
 		localStorage.clear();
@@ -510,6 +499,7 @@ export class ProfileComponent implements OnInit {
 
 	}
 
+
 	//function for deleting a channel
 	deleteChannel(channel) {
 
@@ -558,4 +548,7 @@ export class ProfileComponent implements OnInit {
 
 
 	}
+
+
+
 }
