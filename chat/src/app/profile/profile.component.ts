@@ -138,7 +138,7 @@ export class ProfileComponent implements OnInit {
 		if (this.nofgroupadmin != "" && this.nusername != "" && this.nage != "" && this.nbirthdate != "" && this.nemail != "" && this.npassword != "" && this.nusername != "super") {
 
 
-			if (this.nofgroupadmin == "true") {
+			if (this.nofgroupadmin == "admin") {
 				this.nofgroupadmin = true;
 			} else {
 				this.nofgroupadmin = false;
