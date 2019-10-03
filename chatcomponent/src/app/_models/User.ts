@@ -1,3 +1,4 @@
+//contains datatype for user class
 export class User {
     _id: number;
     username: string;

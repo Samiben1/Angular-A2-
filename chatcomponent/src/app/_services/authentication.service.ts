@@ -16,10 +16,12 @@ export class AuthenticationService {
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
+    //return current users detail
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
 
+    // if the current user matches tha user in the database, login
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
             .pipe(map(user => {
@@ -30,6 +32,7 @@ export class AuthenticationService {
             }));
     }
 
+    //function to logout from the chat component
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

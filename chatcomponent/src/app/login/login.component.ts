@@ -7,6 +7,8 @@ import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
+
+    //loading of the login form
     loginForm: FormGroup;
     loading = false;
     submitted = false;
@@ -26,6 +28,8 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        
+        // validaition of logging in user
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]

@@ -8,6 +8,7 @@ import { User } from '../_models/User';
 export class UserService {
     constructor(private http: HttpClient) { }
 
+    //get all users present in the database
     getAll() {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }

@@ -10,6 +10,7 @@ import { ChatService } from '../_services/chat.service';
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild("scrollMe", {static: false}) myScrollContainer: ElementRef;
 
+  // local variables to store new messages 
   chats: any;
   joinned: boolean = false;
   newUser = { nickname: '', room: '' };
@@ -23,7 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.getChatByRoom(1)
 
-
+    //get the rooms registered in the database for room options
     var user = JSON.parse(localStorage.getItem("user"));
     if (user !== null) {
       this.getChatByRoom(user.room);
@@ -31,6 +32,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.joinned = true;
       this.scrollToBottom();
     }
+
+    // broadcast message through socket
     this.socket.on('new-message', function (data) {
       if (data.message.room === JSON.parse(localStorage.getItem("user")).room) {
         this.chats.push(data.message);
@@ -44,12 +47,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
+  // function to scroll trhough chat history
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
 
+  //function to get chat history by room
   getChatByRoom(room) {
     this.chatService.getChatByRoom(room).toPromise().then((res) => {
       this.chats = res;
@@ -61,7 +66,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
 
-
+  // join a room in the chat box
   joinRoom() {
     var date = new Date();
     localStorage.setItem("user", JSON.stringify(this.newUser));
@@ -71,6 +76,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.socket.emit('save-message', { room: this.newUser.room, nickname: this.newUser.nickname, message: 'Join this room', updated_at: date });
   }
 
+  // function to send message to the database
   sendMessage() {
     this.chatService.saveChat(this.msgData).toPromise().then((result) => {
       this.socket.emit('save-message', result);
@@ -79,6 +85,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  //logout function( get user out of the chat system)
   logout() {
     var date = new Date();
     var user = JSON.parse(localStorage.getItem("user"));
